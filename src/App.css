@@ -1,12 +1,17 @@
 .App {
   text-align: center;
 }
-
+a.nav-link{
+  color: white !important;
+  font-weight: 600 !important;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
 }
-
+.white{
+  color:white;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

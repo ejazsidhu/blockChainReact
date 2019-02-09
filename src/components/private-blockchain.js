@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
-class Home extends Component {
+class PrivateBlockChain extends Component {
     // responseData
 
     constructor(props) {
@@ -106,7 +106,7 @@ class Home extends Component {
 
         return (
 
-            <div>
+            <div className="container">
 
 
                 <Form onSubmit={this.handleSubmit}>
@@ -157,4 +157,4 @@ class Home extends Component {
 
 }
 
-export default Home;
+export default PrivateBlockChain;
