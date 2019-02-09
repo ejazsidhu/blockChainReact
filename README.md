@@ -1,68 +1,92 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Private Blockchain Web-Service
+This is a simple blockchain web service to store data in private blockchain.
+## Getting Started
 
-## Available Scripts
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+Following technologies are used in this project:
+1. Node.js
+1. Express framework for web services
+2. `express-generator`, to quickly create an application skeleton.
+3. LevelDB to persist blocks
+4. crypto-js library to encrypt blocks
 
-In the project directory, you can run:
+### Prerequisites
 
-### `npm start`
+Installing Node and NPM is pretty straightforward using the installer package available from the (Node.js® web site)[https://nodejs.org/en/].
+- Test your node installation by typing below command in terminal
+```
+node --version
+```
+It should return node version e.g. `v8.9.4`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Running Blockchain web service
+- Installing project dependencies
+```
+npm install
+```
+- Start the application and browse it at : http://localhost:8000  
+**Note** : `npm start` will invoke `./bin/www` script which contains web service startup script
+```
+ npm start
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
 
-### `npm test`
+## APIs
+Following APIs are implemented. Use any REST client to test below APIs
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+----
 
-### `npm run build`
+### 1. Get block
+http://localhost:8000/block/{BLOCK_HEIGHT}
+  Returns json data about a single block at height.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* **URL**
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+  /block/:height
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* **Method:**
 
-### `npm run eject`
+  `GET`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+*  **URL Params**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   **Required:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   `height=[integer]`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* **Success Response:**
 
-## Learn More
+  * **Code:** 200 <br />
+    **Content:** `{"hash":"910bb1155fecdc5cf22f4b70f7805186f9f6de8f5c8d2e05f01f222e82cdea9d","height":0,"body":"First block in the chain - Genesis block","time":"1535137099","previousBlockHash":""}`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* **Error Response:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  * **Code:** 500 Internal Server Error <br />
+    **Content:** `{"code":"500","status":"Internal Server Error","message":"Block with provided height does not exist"}`
+----
+### 2. Post Block
+    http://localhost:8000/block
 
-### Code Splitting
+    Returns json data of added block
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  * **URL**
 
-### Analyzing the Bundle Size
+    /block
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+  * **Method:**
 
-### Making a Progressive Web App
+    `POST`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+  *  **Request Body**
 
-### Advanced Configuration
+     `{"body":"block body contents"}`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+  * **Success Response:**
 
-### Deployment
+    * **Code:** 200 <br />
+      **Content:** `{"hash":"910bb1155fecdc5cf22f4b70f7805186f9f6de8f5c8d2e05f01f222e82cdea9d","height":0,"body":""New block 1","time":"1535137099","previousBlockHash":"910bb1155fecdc5cf22f4b70f7805186f9f6de8f5c8d2e05f01f222e82cdea9d"}`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+  * **Error Response:**
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+    * **Code:** 500 Internal Server Error <br />
+      **Content:** `{"code":"500","status":"Internal Server Error","message":"New block not added"}`
