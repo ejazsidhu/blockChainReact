@@ -26,10 +26,27 @@ class Home extends Component {
         this.setState({ post: event.target.value });
     }
 
-    handlePostSubmit(event) {
+    async handlePostSubmit(event) {
         event.preventDefault();
         let body={"body":this.state.post};
-        console.log( body)
+        console.log( body);
+
+        const rawResponse = await fetch('http://localhost:8000/block', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  const content = await rawResponse.json();
+
+  console.log('post response',content.hash);
+  this.setState({ hash1: content.hash })
+        this.setState({ body1: content.body })
+        this.setState({ time1: content.time })
+        this.setState({ height1: content.height })
+        this.setState({ previousBlockHash1: content.previousBlockHash })
 
 
     }
@@ -40,11 +57,13 @@ class Home extends Component {
 
         const response = await fetch('http://localhost:8000/block/' + this.state.value)
         const data = await response.json();
-        this.setState({ hash: data.hash })
-        this.setState({ body: data.body })
-        this.setState({ time: data.time })
-        this.setState({ height: data.height })
-        this.setState({ previousBlockHash: data.previousBlockHash })
+        this.setState({ hash: data.hash });
+        this.setState({ body: data.body });
+        this.setState({ time: data.time });
+        this.setState({ height: data.height });
+        this.setState({ previousBlockHash: data.previousBlockHash });
+
+        this.state.hash1=null
 
     }
 
@@ -63,15 +82,23 @@ class Home extends Component {
 
     render() {
         var data = '';
+        var responseData=''
         if (this.state.hash) {
             data += 'Height:   ' + this.state.height;
             data += '\nTime:   ' + this.timeConverter(this.state.time);
             data += '\nBlock Hash:  ' + this.state.hash;
             data += '\nPrevious Block Hash:  ' + this.state.previousBlockHash;
             data += '\nBody: ' + this.state.body;
-
-
         }
+        if (this.state.hash1) {
+            responseData += 'Height:   ' + this.state.height1;
+            responseData += '\nTime:   ' + this.timeConverter(this.state.time1);
+            responseData += '\nBlock Hash:  ' + this.state.hash1;
+            responseData += '\nPrevious Block Hash:  ' + this.state.previousBlockHash1;
+            responseData += '\nBody: ' + this.state.body1;
+        }
+
+
 
 
 
@@ -112,6 +139,11 @@ class Home extends Component {
                     </InputGroup>
 
                 </Form>
+
+                <Form.Group controlId="blockData">
+                    <Form.Label>Response</Form.Label>
+                    <Form.Control as="textarea" rows="5" value={responseData} />
+                </Form.Group>
 
                 
 
