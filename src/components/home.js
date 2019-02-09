@@ -9,14 +9,29 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = { value: '',post:'' };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.handlePostSubmit = this.handlePostSubmit.bind(this);
+        this.handlePostChange=this.handlePostChange.bind(this);
     }
 
     handleChange(event) {
         this.setState({ value: event.target.value });
+    }
+
+    handlePostChange(event) {
+        this.setState({ post: event.target.value });
+    }
+
+    handlePostSubmit(event) {
+        event.preventDefault();
+        let body={"body":this.state.post};
+        console.log( body)
+
+
     }
 
     async handleSubmit(event) {
@@ -68,27 +83,37 @@ class Home extends Component {
 
 
                 <Form onSubmit={this.handleSubmit}>
-                <Form.Label>Get Block </Form.Label>
+                    <Form.Label><h5>Add New Block</h5>  </Form.Label>
                     <InputGroup className="mb-3">
-                    
+
                         <Form.Control type="number" value={this.state.value} onChange={this.handleChange} />
 
                         <InputGroup.Append>
-                            <Button variant="primary"  type="submit">Button</Button>
+                            <Button variant="primary" type="submit">Get Block</Button>
                         </InputGroup.Append>
                     </InputGroup>
-                    {/* <Form.Group controlId="block">
-                        <Form.Label>Get Block </Form.Label>
-                        <Form.Control type="number" value={this.state.value} onChange={this.handleChange} />
-                    </Form.Group>
-                    
-                    <Button variant="primary" type="submit" value="Submit"> Submit </Button> */}
+
                 </Form>
 
                 <Form.Group controlId="blockData">
                     <Form.Label>Block Data</Form.Label>
                     <Form.Control as="textarea" rows="5" value={data} />
                 </Form.Group>
+                {/* <hr> */}
+                <Form onSubmit={this.handlePostSubmit}>
+                    <Form.Label><h5>Add New Block</h5>  </Form.Label>
+                    <InputGroup className="mb-3">
+
+                        <Form.Control type="text" value={this.state.post} onChange={this.handlePostChange} />
+
+                        <InputGroup.Append>
+                            <Button variant="primary" type="submit">Add Block</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+
+                </Form>
+
+                
 
 
             </div>
