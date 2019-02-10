@@ -15,7 +15,7 @@ Installing Node and NPM is pretty straightforward using the installer package av
 ```
 node --version
 ```
-It should return node version e.g. `v8.9.4`
+
 
 ### Running Blockchain web service
 - Installing project dependencies
