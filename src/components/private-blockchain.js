@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
+import { PageHeading } from "./pageHeading";
+
 class PrivateBlockChain extends Component {
     // responseData
 
@@ -107,6 +109,7 @@ class PrivateBlockChain extends Component {
         return (
 
             <div className="container">
+            <PageHeading heading="Private Blockchain" subHeading="Generate blockchain"/>
 
 
                 <Form onSubmit={this.handleSubmit}>

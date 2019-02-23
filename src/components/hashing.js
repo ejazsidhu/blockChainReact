@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-
+import { PageHeading } from "./pageHeading";
 class Hashing extends Component {
 
 
@@ -36,6 +36,7 @@ class Hashing extends Component {
         
         return (
             <div className="container">
+            <PageHeading heading="SHA256 Hash" subHeading="Generate SHA256 hash of data"/>
             <div className="jumbotron">
            
             <div className="row">
