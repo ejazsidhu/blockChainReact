@@ -11,8 +11,26 @@ class Hashing extends Component {
 
     }
 
-    handleChange(event) {
+    async handleChange(event) {
         this.setState({ value: event.target.value });
+        let body={data:event.target.value}
+
+        const rawResponse = await fetch('http://localhost:8000/gateway/hash', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        const content = await rawResponse.json();
+        console.log('hash content',content)
+        
+        this.setState({hashing:content.hash});
+    }
+
+    handleSubmit(event){
+
     }
     render() {
         
@@ -36,7 +54,7 @@ class Hashing extends Component {
             Hash
             </div>
             <div className="col-md-8">
-            <Form.Control type="text" value={this.state.value} onChange={this.handleChange} />
+            <Form.Control type="text" value={this.state.hashing} disabled />
             
             </div>
             </div>

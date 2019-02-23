@@ -9,13 +9,13 @@ class PrivateBlockChain extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { value: '',post:'' };
+        this.state = { value: '', post: '' };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.handlePostSubmit = this.handlePostSubmit.bind(this);
-        this.handlePostChange=this.handlePostChange.bind(this);
+        this.handlePostChange = this.handlePostChange.bind(this);
     }
 
     handleChange(event) {
@@ -28,21 +28,21 @@ class PrivateBlockChain extends Component {
 
     async handlePostSubmit(event) {
         event.preventDefault();
-        let body={"body":this.state.post};
-        console.log( body);
+        let body = { "body": this.state.post };
+        console.log(body);
 
         const rawResponse = await fetch('http://localhost:8000/block', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-  const content = await rawResponse.json();
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        const content = await rawResponse.json();
 
-  console.log('post response',content.hash);
-  this.setState({ hash1: content.hash })
+        console.log('post response', content.hash);
+        this.setState({ hash1: content.hash })
         this.setState({ body1: content.body })
         this.setState({ time1: content.time })
         this.setState({ height1: content.height })
@@ -63,7 +63,7 @@ class PrivateBlockChain extends Component {
         this.setState({ height: data.height });
         this.setState({ previousBlockHash: data.previousBlockHash });
 
-        this.state.hash1=null
+        this.state.hash1 = null
 
     }
 
@@ -82,7 +82,7 @@ class PrivateBlockChain extends Component {
 
     render() {
         var data = '';
-        var responseData=''
+        var responseData = ''
         if (this.state.hash) {
             data += 'Height:   ' + this.state.height;
             data += '\nTime:   ' + this.timeConverter(this.state.time);
@@ -145,7 +145,7 @@ class PrivateBlockChain extends Component {
                     <Form.Control as="textarea" rows="5" value={responseData} />
                 </Form.Group>
 
-                
+
 
 
             </div>
