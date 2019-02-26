@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { PageHeading } from "./pageHeading";
 
 class PrivateBlockChain extends Component {
+    ip='http://13.126.11.59:8000';
     // responseData
 
     constructor(props) {
@@ -33,7 +34,7 @@ class PrivateBlockChain extends Component {
         let body = { "body": this.state.post };
         console.log(body);
 
-        const rawResponse = await fetch('http://localhost:8000/block', {
+        const rawResponse = await fetch(`${this.ip}/block`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -57,7 +58,7 @@ class PrivateBlockChain extends Component {
         // alert('A name was submitted: ' + this.state.value);
         event.preventDefault();
 
-        const response = await fetch('http://localhost:8000/block/' + this.state.value)
+        const response = await fetch(`${this.ip}/block/${this.state.value}`)
         const data = await response.json();
         this.setState({ hash: data.hash });
         this.setState({ body: data.body });
@@ -127,7 +128,7 @@ class PrivateBlockChain extends Component {
 
                 <Form.Group controlId="blockData">
                     <Form.Label>Block Data</Form.Label>
-                    <Form.Control as="textarea" rows="5" value={data} />
+                    <Form.Control as="textarea" rows="5" value={data}  readOnly/>
                 </Form.Group>
                 {/* <hr> */}
                 <Form onSubmit={this.handlePostSubmit}>
@@ -145,7 +146,7 @@ class PrivateBlockChain extends Component {
 
                 <Form.Group controlId="blockData">
                     <Form.Label>Response</Form.Label>
-                    <Form.Control as="textarea" rows="5" value={responseData} />
+                    <Form.Control as="textarea" rows="5" value={responseData} readOnly />
                 </Form.Group>
 
 

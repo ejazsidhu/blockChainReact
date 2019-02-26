@@ -55,7 +55,7 @@ class Hashing extends Component {
             Hash
             </div>
             <div className="col-md-8">
-            <Form.Control type="text" value={this.state.hashing} disabled />
+            <Form.Control type="text" value={this.state.hashing}  disabled />
             
             </div>
             </div>
