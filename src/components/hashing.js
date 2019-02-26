@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import { PageHeading } from "./pageHeading";
 class Hashing extends Component {
+    ip='http://13.126.11.59:8000';
 
 
     constructor(props){
@@ -15,7 +16,7 @@ class Hashing extends Component {
         this.setState({ value: event.target.value });
         let body={data:event.target.value}
 
-        const rawResponse = await fetch('http://localhost:8000/gateway/hash', {
+        const rawResponse = await fetch(`${this.ip}/gateway/hash`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

@@ -109,7 +109,7 @@ class Signing extends Component {
 
            <div className="row mt-2 mb-2">
            <div className="col-md-12 text-center">
-           <Button variant="primary" type="submit">Signing</Button>
+           <Button variant="primary" type="submit">Validate</Button>
            
            </div>
            </div>
