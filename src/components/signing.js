@@ -8,18 +8,62 @@ class Signing extends Component {
 
     constructor(props){
         super(props)
-        this.state = { value: '', post: '' };
+        this.state = { data: '', privateKey: '',message:'',address:'',signature:'',validateSignature:'' };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDataChange = this.handleDataChange.bind(this);
+        this.handleKeyChange = this.handleKeyChange.bind(this);
+        this.handleSignatureSubmit = this.handleSignatureSubmit.bind(this);
+
+        this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
     }
-    handleChange(event) {
-        this.setState({ value: event.target.value });
+    handleDataChange(event) {
+        this.setState({ data: event.target.value });
+    }
+    handleKeyChange(event) {
+        this.setState({ privateKey: event.target.value });
     }
 
-    handleSubmit(event){
+    handleMessageChange(event) {
+        this.setState({ address: event.target.value });
+    }
+    handleAddressChange(event) {
+        this.setState({ message: event.target.value });
+    }
+
+    async handleSignatureSubmit(event){
         event.preventDefault();
+        let body={data:this.state.data,privateKey:this.state.privateKey}
 
+        const rawResponse = await fetch(`${this.ip}/sign/generate`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        const content = await rawResponse.json();
+        console.log('hash content',content);
+        this.setState({signature:content.signature})
+
+    }
+
+    async handleValidateSubmit(event){
+        event.preventDefault();
+        let body={data:this.state.data,privateKey:this.state.privateKey}
+
+        const rawResponse = await fetch(`${this.ip}/sign/validate`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        const content = await rawResponse.json();
+        console.log('hash content',content)
+        this.setState({validateSignature:content.signature})
     }
   
     render() {
@@ -35,7 +79,7 @@ class Signing extends Component {
             </div>
             <div className="jumbotron">
             
-           
+           <Form onSubmit={this.handleSignatureSubmit}>
            <div className="row">
            <div className="col-md-2">
            Data
@@ -43,7 +87,7 @@ class Signing extends Component {
            <div className="col-md-8">
            <Form.Group controlId="blockData">
                    {/* <Form.Label>Response</Form.Label> */}
-                   <Form.Control type="text" value={this.state.value} onChange={this.handleChange} />
+                   <Form.Control type="text" value={this.state.data} onChange={this.handleDataChange} />
                </Form.Group>
            </div>
            </div>
@@ -52,24 +96,25 @@ class Signing extends Component {
            Private Key
            </div>
            <div className="col-md-8">
-           <Form.Control type="text" value={this.state.hashing}  />
+           <Form.Control type="text" value={this.state.privateKey} onChange={this.handleKeyChange}  />
            
            </div>
            </div>
-
            <div className="row mt-2 mb-2">
            <div className="col-md-12 text-center">
            <Button variant="primary" type="submit">Signing</Button>
            
            </div>
            </div>
+           </Form>
+           
 
            <div className="row">
            <div className="col-md-2">
            Signature
            </div>
            <div className="col-md-8">
-           <Form.Control as="textarea" rows="7" value={this.state.hashing}  readOnly />
+           <Form.Control as="textarea" rows="7" value={this.state.signature}  readOnly />
            
            </div>
            </div>
@@ -84,7 +129,7 @@ class Signing extends Component {
             
             </div>
            <div className="jumbotron">
-          
+          <Form onSubmit={this.handleValidateSubmit}>
            
            <div className="row">
            <div className="col-md-2">
@@ -93,7 +138,7 @@ class Signing extends Component {
            <div className="col-md-8">
            <Form.Group controlId="blockData">
                    {/* <Form.Label>Response</Form.Label> */}
-                   <Form.Control type="text" value={this.state.value} onChange={this.handleChange} />
+                   <Form.Control type="text" value={this.state.address} onChange={this.handleAddressChange} />
                </Form.Group>
            </div>
            </div>
@@ -102,7 +147,7 @@ class Signing extends Component {
            Message
            </div>
            <div className="col-md-8">
-           <Form.Control as="textarea" rows="7" value={this.state.hashing}  />
+           <Form.Control type="text" value={this.state.message} onChange={this.handleMessageChange}  />
            
            </div>
            </div>
@@ -114,12 +159,13 @@ class Signing extends Component {
            </div>
            </div>
 
+           </Form>
            <div className="row">
            <div className="col-md-2">
            Signature
            </div>
            <div className="col-md-8">
-           <Form.Control as="textarea" rows="7" value={this.state.hashing}  readOnly />
+           <Form.Control as="textarea" rows="7" value={this.state.validateSignature}  readOnly />
            
            </div>
            </div>
