@@ -5,6 +5,7 @@ import Button  from 'react-bootstrap/Button';
 import { PageHeading } from './pageHeading';
 
 class Signing extends Component {
+    ip='http://13.126.11.59:8000';
 
     constructor(props){
         super(props)
